@@ -14,17 +14,69 @@
           <ul class="flex justify-around items-center">
             <li><button>Carreras</button></li>
             <li><img src="assets/logo.PNG" alt="" srcset=""></li>
-            <li><button>Añadir empleo</button></li>
+            <li><button id="addJob">Añadir empleo</button></li>
           </ul>
         </nav>
     </header>
 
     <main class="flex justify-center mt-8">
-        <div id="container-careers" class="flex flex-wrap w-[1100px] justify-between">
-            <!-- codigo js -->
-        </div>
-    </main>
+        <section id="section-careers" class="">
+            <div id="container-careers" class="flex flex-wrap w-[1100px] justify-between"> 
+                
+            </div>
+        </section>
 
+
+        <section id="form" class="hidden">
+            <div>
+                <form action="" class="w-[800px]">
+                    <div class="flex flex-col mt-5 ">
+                        <label for="title" class="font-bold mb-1">Titulo</label>
+                        <input type="text" name="title" placeholder="Titulo de la oferta laboral" class="py-2 px-3 border-2 rounded-md" id="title">
+                    </div>
+                    <div class="flex flex-col mt-5 ">
+                        <label for="description" class="font-bold mb-1">Descripción</label>
+                        <textarea name="description" id="description" cols="30" rows="10" class="py-2 px-3 border-2 rounded-md"></textarea>
+                    </div>
+                    <div class="flex flex-col mt-5 ">
+                        <label for="etiquetas" class="font-bold mb-1">Etiquetas</label>
+                        <input type="text" name="location" placeholder="Ubicación" class="py-2 px-3 border-2 rounded-md" id="location">
+                        <input type="text" name="category" placeholder="Categoría de la oferta" class="py-2 px-3 border-2 rounded-md" id="category">
+                        <input type="text" name="seniority" placeholder="Seniority del puesto" class="py-2 px-3 border-2 rounded-md" id="seniority">
+                        <input type="text" name="brand" placeholder="Nombre de la marca" class="py-2 px-3 border-2 rounded-md" id="brand">
+                        <input type="text" name="img" placeholder="URL de la imagene de la Marca" class="py-2 px-3 border-2 rounded-md" id="img">
+                    </div>
+                    <div>
+                        <button type="submit" id="submit">Publicar</button>
+                        <button type="submit" id="submit-edit">Editar</button>
+                    </div>
+                </form>
+            </div>
+        </section> 
+
+
+        <section id="card-details"class="hidden">
+            
+        </section> 
+
+
+        <section id="alert-delete" class="hidden">
+            <div>
+                <p>Estas seguro que quieres eliminar este trabajo?</p>
+                <button id="submit-delete">Eliminar</button>
+                <button>Cancelar</button>
+
+            </div>
+        </section>
+
+        
+
+
+
+
+
+
+    </main>
     <script src="js/app.js"></script>
 </body>
 </html>
