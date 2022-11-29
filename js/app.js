@@ -56,7 +56,7 @@ const registerJob = () => {
 
 //PUT
 const editJob = (jobId) => {
-    fetch(`https://6384c7c63fa7acb14f00609e.mockapi.io/jobs${jobId}`,{
+    fetch(`https://6384c7c63fa7acb14f00609e.mockapi.io/jobs/${jobId}`,{
         method: "PUT", 
         headers: {
             'Content-Type': 'Application/json'
@@ -71,7 +71,6 @@ const deleteJob = (jobId) => {
         method: "DELETE"
     }).finally(() => window.location.href = "index.html")
 }
-
 
 // manipulation of dom
 
@@ -155,6 +154,14 @@ const saveNewJob = () => {
 }
 
 // events
+$("#show-careers").addEventListener("click", () => {
+    window.location.href = "index.html"
+})
+
+$("#btn-cancel").addEventListener("click", () => {
+    window.location.href = "index.html"
+})
+
 $("#addJob").addEventListener("click", () => {
     hideElement($("#section-careers"))
     showElement($("#form"))
@@ -172,6 +179,7 @@ $("#form").addEventListener("submit", (e) => {
     }
     
 })
+
 $("#submit-delete").addEventListener("click", () => {
     const jobId = $("#submit-delete").getAttribute("data-id")
     deleteJob(jobId)
