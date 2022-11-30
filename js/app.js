@@ -8,15 +8,24 @@ const showElement = (selector) => selector.classList.remove("hidden")
 
 // var
 
-let isSubmit = false
+let isSubmit = false;
+let arrCategories = [];
+let arrLocations = [];
+let arrSeniorities = []
 
 //methods
 
 //GET
 const getJobs = () => {
     fetch("https://6384c7c63fa7acb14f00609e.mockapi.io/jobs")
-    .then(res => res.json())
-    .then(data => showJobs(data))
+        .then(res => res.json())
+        .then(data => {
+            showJobs(data)
+            arraysToFilters(data)
+            showFilterCategories()
+            showFilterLocations()
+            showFilterSeniorities()
+        })
 }
 getJobs()
 
@@ -141,6 +150,28 @@ const populateForm = (job) => {
         $("#brand").value = job.brand
 }
 
+const showFilterCategories = () => {
+    for (const category of arrCategories) {
+        $("#select-category").innerHTML += `
+        <option value="">${category}</option>
+        `  
+    }
+}
+const showFilterLocations = () => {
+    for (const location of arrLocations) {
+        $("#select-location").innerHTML += `
+        <option value="">${location}</option>
+        `  
+    }
+}
+const showFilterSeniorities = () => {
+    for (const seniority of arrSeniorities) {
+        $("#select-seniority").innerHTML += `
+        <option value="">${seniority}</option>
+        `  
+    }
+}
+
 // functions
 
 const saveNewJob = () => {
@@ -152,6 +183,24 @@ const saveNewJob = () => {
         seniority: $("#seniority").value,
         image: $("#img").value,
         brand: $("#brand").value,
+    }
+}
+
+const arraysToFilters = (jobs) => {
+    for (const job of jobs) {
+        
+        if (!arrCategories.includes(job.category)) {
+            arrCategories.push(job.category)
+            
+        }
+        if (!arrLocations.includes(job.location)) {
+            arrLocations.push(job.location)
+            
+        }
+        if (!arrSeniorities.includes(job.seniority)) {
+            arrSeniorities.push(job.seniority)
+            
+        }
     }
 }
 
@@ -189,4 +238,9 @@ $("#submit-delete").addEventListener("click", () => {
     const jobId = $("#submit-delete").getAttribute("data-id")
     deleteJob(jobId)
 })
+
+
+
+
+
 
