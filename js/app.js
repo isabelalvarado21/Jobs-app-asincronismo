@@ -29,17 +29,7 @@ const getJob = (jobId) => {
 const getJobToEdit = (jobId) => {
     fetch(`https://6384c7c63fa7acb14f00609e.mockapi.io/jobs/${jobId}`)
         .then(res => res.json())
-        .then(data => {
-            hideElement($("#card-details"))
-            showElement($("#form"))
-        $("#title").value = data.name
-        $("#description").value = data.description
-        $("#location").value = data.location,
-        $("#category").value = data.category,
-        $("#seniority").value = data.seniority,
-        $("#img").value = data.image
-        $("#brand").value = data.brand
-        })
+        .then(data => populateForm(data))
 
 }
 
@@ -139,6 +129,18 @@ const showJobDetail = (job) =>{
     }
 }
 
+const populateForm = (job) => {
+    hideElement($("#card-details"))
+    showElement($("#form"))
+        $("#title").value = job.name
+        $("#description").value = job.description
+        $("#location").value = job.location,
+        $("#category").value = job.category,
+        $("#seniority").value = job.seniority,
+        $("#img").value = job.image
+        $("#brand").value = job.brand
+}
+
 // functions
 
 const saveNewJob = () => {
@@ -159,13 +161,16 @@ $("#show-careers").addEventListener("click", () => {
 })
 
 $("#btn-cancel").addEventListener("click", () => {
-    window.location.href = "index.html"
+    hideElement($("#alert-delete"))
+    showElement($("#section-careers"))
 })
 
 $("#addJob").addEventListener("click", () => {
     hideElement($("#section-careers"))
     showElement($("#form"))
     hideElement($("#submit-edit"))
+    showElement($("#submit"))
+    $("#form-").reset()
     isSubmit = true
 })
 
