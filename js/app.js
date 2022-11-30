@@ -6,6 +6,8 @@ const $$ = (selector) => document.querySelectorAll(selector)
 const hideElement = (selector) => selector.classList.add("hidden")
 const showElement = (selector) => selector.classList.remove("hidden")
 
+const capitalize = (word) => {return word[0].toUpperCase() + word.slice(1);}
+
 // var
 
 let isSubmit = false;
@@ -40,6 +42,13 @@ const getJobToEdit = (jobId) => {
         .then(res => res.json())
         .then(data => populateForm(data))
 
+}
+const getJobFilter = (filter, select) => {
+    fetch(`https://6384c7c63fa7acb14f00609e.mockapi.io/jobs/?${filter}=${select}`)
+        .then(res => res.json())
+        .then(data => { 
+            $("#container-careers").innerHTML="";
+            showJobs(data)})
 }
 
 //POST
@@ -92,7 +101,6 @@ const showJobs = (jobs) => {
            
         })
     }
-
 }
 
 const showJobDetail = (job) =>{
@@ -153,21 +161,21 @@ const populateForm = (job) => {
 const showFilterCategories = () => {
     for (const category of arrCategories) {
         $("#select-category").innerHTML += `
-        <option value="">${category}</option>
+        <option value="${category}">${category}</option>
         `  
     }
 }
 const showFilterLocations = () => {
     for (const location of arrLocations) {
         $("#select-location").innerHTML += `
-        <option value="">${location}</option>
-        `  
-    }
+        <option value="${location}">${location}</option>
+        `
+    } 
 }
 const showFilterSeniorities = () => {
     for (const seniority of arrSeniorities) {
         $("#select-seniority").innerHTML += `
-        <option value="">${seniority}</option>
+        <option value="${seniority}">${seniority}</option>
         `  
     }
 }
@@ -176,11 +184,11 @@ const showFilterSeniorities = () => {
 
 const saveNewJob = () => {
     return {
-        name: $("#title").value,
-        description: $("#description").value,
-        location: $("#location").value,
-        category: $("#category").value,
-        seniority: $("#seniority").value,
+        name: capitalize($("#title").value),
+        description: capitalize($("#description").value),
+        location: capitalize($("#location").value),
+        category: capitalize($("#category").value),
+        seniority: capitalize($("#seniority").value),
         image: $("#img").value,
         brand: $("#brand").value,
     }
@@ -191,15 +199,12 @@ const arraysToFilters = (jobs) => {
         
         if (!arrCategories.includes(job.category)) {
             arrCategories.push(job.category)
-            
         }
         if (!arrLocations.includes(job.location)) {
-            arrLocations.push(job.location)
-            
+            arrLocations.push(job.location)  
         }
         if (!arrSeniorities.includes(job.seniority)) {
-            arrSeniorities.push(job.seniority)
-            
+            arrSeniorities.push(job.seniority)  
         }
     }
 }
@@ -217,6 +222,7 @@ $("#btn-cancel").addEventListener("click", () => {
 $("#addJob").addEventListener("click", () => {
     hideElement($("#section-careers"))
     showElement($("#form"))
+    hideElement($("#card-details"))
     hideElement($("#submit-edit"))
     showElement($("#submit"))
     $("#form-").reset()
@@ -230,8 +236,7 @@ $("#form").addEventListener("submit", (e) => {
     } else {
         const jobId = $("#submit-edit").getAttribute("data-id")
         editJob(jobId)
-    }
-    
+    }  
 })
 
 $("#submit-delete").addEventListener("click", () => {
@@ -239,7 +244,28 @@ $("#submit-delete").addEventListener("click", () => {
     deleteJob(jobId)
 })
 
+$("#select-location").addEventListener("change", (e) => {
+    let locationSelect = e.target.value;
+    getJobFilter("location", locationSelect)
+    
+})
 
+$("#select-category").addEventListener("change", (e) => {
+    let categorySelect = e.target.value;
+    getJobFilter("category", categorySelect)
+})
+
+$("#select-seniority").addEventListener("change", (e) => {
+    let senioritySelect = e.target.value;
+    getJobFilter("seniority", senioritySelect)
+    
+})
+
+
+
+
+
+ 
 
 
 
