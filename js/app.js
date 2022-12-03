@@ -8,7 +8,7 @@ const showElement = (selector) => selector.classList.remove("hidden")
 
 const capitalize = (word) => {return word[0].toUpperCase() + word.slice(1);}
 
-// var
+// let
 
 let isSubmit = false;
 let arrCategories = [];
@@ -43,6 +43,7 @@ const getJobToEdit = (jobId) => {
         .then(data => populateForm(data))
 
 }
+
 const getJobFilter = (filter, select) => {
     fetch(`https://6384c7c63fa7acb14f00609e.mockapi.io/jobs/?${filter}=${select}`)
         .then(res => res.json())
@@ -83,14 +84,15 @@ const deleteJob = (jobId) => {
 // manipulation of dom
 
 const showJobs = (jobs) => {
+    
     for (const {name, brand, location, id} of jobs) {
         $("#container-careers").innerHTML += `
-        <div class="w-1/5 p-8 border-2 border-[#ECC8AE] m-4">
-            <div>
-                <h2 class="text-2xl text-[#1A3A3A] font-bold">${name}</h2>
-                <h4 class="text-xl font-medium text-[#ECC8AE]">${brand}</h4>
-                <p><i class="fa-solid fa-location-dot"></i>${location}</p>
-                <button class="btn-details" onclick="getJob(${id})">Ver detalles</button>
+        <div class="w-1/5 p-8 border-2 border-[#773344] m-4">
+            <div class="space-y-4">
+                <h2 class="text-2xl text-[#0B0014] font-bold text-center">${name}</h2>
+                <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
+                <p class=""><i class="fa-solid fa-location-dot text-red-700"></i> ${location}</p>
+                <button class="btn-details px-4 py-1 rounded-md border-2 border-[#1A3A3A]" onclick="getJob(${id})">Ver detalles</button>
             </div>
         </div>`  
     }
@@ -107,20 +109,20 @@ const showJobDetail = (job) =>{
     const {name, description, location, category, seniority, image, brand, id} = job
     $("#card-details").innerHTML = `
     <div class=" w-[800px]">
-                <div class="flex p-8 border-2 border-[#ECC8AE] m-4">
-                    <div>
+                <div class="flex p-8 border-2 border-[#773344] m-4">
+                    <div class="w-[500px] mt-20">
                         <img src="${image}" alt="">
                     </div>
-                    <div>
-                        <h1 class="text-2xl text-[#1A3A3A] font-bold">${name}</h1>
-                        <p>${brand}</p>
-                        <p><i class="fa-solid fa-location-dot"></i>${location}</p>
-                        <p>${category}</p>
+                    <div class="space-y-4">
+                        <h1 class="text-2xl text-[#0B0014] font-bold">${name.toUpperCase()}</h1>
+                        <h4 class="text-xl font-medium text-[#773344]">${brand.toUpperCase()}</h4>
+                        <p class="">Ubicación:  <i class="fa-solid fa-location-dot text-red-700"></i> <span class="font-semibold">${location}</span></p>
+                        <p>Categoría del puesto: <span class="font-semibold">${category}</span></p>
                         <p>${description}</p>
-                        <p>${seniority}</p>
+                        <p>Experiencia: <span class="font-semibold">${seniority}</span></p>
                         <div>
-                        <button class="btn-edit" data-id="${id}">Editar</button>
-                        <button class="btn-delete" data-id="${id}">Eliminar</button>
+                        <button class="btn-edit text-white px-4 py-1 rounded-md  bg-green-700" data-id="${id}">Editar</button>
+                        <button class="btn-delete text-white px-4 py-1 rounded-md bg-red-700" data-id="${id}">Eliminar</button>
                         </div>
                     </div>
                 </div>
@@ -224,6 +226,7 @@ $("#addJob").addEventListener("click", () => {
     showElement($("#form"))
     hideElement($("#card-details"))
     hideElement($("#submit-edit"))
+    hideElement($("#alert-delete"))
     showElement($("#submit"))
     $("#form-").reset()
     isSubmit = true
