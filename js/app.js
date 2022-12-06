@@ -110,7 +110,7 @@ const showJobDetail = (job) =>{
     <div class=" w-[800px]">
                 <div class="flex p-8 border-2 border-[#773344] m-4">
                     <div class="w-[500px] mt-20">
-                        <img src="${image}" alt="">
+                        <img src="${image}" alt="" class="w-[200px] h-[100px]">
                     </div>
                     <div class="space-y-4">
                         <h1 class="text-2xl text-[#0B0014] font-bold">${name.toUpperCase()}</h1>
