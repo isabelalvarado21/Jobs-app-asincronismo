@@ -84,28 +84,34 @@ const deleteJob = (jobId) => {
 // manipulation of dom
 
 const showJobs = (jobs) => {
-    for (const {name, brand, location, id} of jobs) {
-        $("#container-careers").innerHTML += `
-        <div class="w-1/5 p-8 border-2 border-[#773344] m-4">
-            <div class="space-y-4">
-                <h2 class="text-2xl text-[#0B0014] font-bold text-center">${name}</h2>
-                <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
-                <p class=""><i class="fa-solid fa-location-dot text-red-700"></i> ${location}</p>
-                <button class="btn-details px-4 py-1 rounded-md border-2 border-[#1A3A3A]" onclick="getJob(${id})">Ver detalles</button>
-            </div>
-        </div>`  
-    }
-    for (const btn of $$(".btn-details")) {
-        btn.addEventListener("click", () => {
-            hideElement($("#section-careers"))
-            showElement($("#card-details"))
-           
-        })
-    }
+    setTimeout(() => {
+        $("#spiner").innerHTML =""
+        for (const {name, brand, location, id} of jobs) {
+            $("#container-careers").innerHTML += `
+            <div class="w-1/5 p-8 border-2 border-[#773344] m-4">
+                <div class="space-y-4">
+                    <h2 class="text-2xl text-[#0B0014] font-bold text-center">${name}</h2>
+                    <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
+                    <p class=""><i class="fa-solid fa-location-dot text-red-700"></i> ${location}</p>
+                    <button class="btn-details px-4 py-1 rounded-md border-2 border-[#1A3A3A]" onclick="getJob(${id})">Ver detalles</button>
+                </div>
+            </div>`  
+        }
+        for (const btn of $$(".btn-details")) {
+            btn.addEventListener("click", () => {
+                hideElement($("#section-careers"))
+                showElement($("#card-details"))
+               
+            })
+        }
+
+    }, 2000)
+     
 }
 
 const showJobDetail = (job) =>{
-    const {name, description, location, category, seniority, image, brand, id} = job
+   
+        const {name, description, location, category, seniority, image, brand, id} = job
     $("#card-details").innerHTML = `
     <div class=" w-[800px]">
                 <div class="flex p-8 border-2 border-[#773344] m-4">
@@ -145,6 +151,9 @@ const showJobDetail = (job) =>{
             $("#submit-delete").setAttribute("data-id", jobId)
         })
     }
+        
+    ;
+    
 }
 
 const populateForm = (job) => {
