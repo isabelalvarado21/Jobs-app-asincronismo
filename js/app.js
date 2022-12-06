@@ -84,7 +84,6 @@ const deleteJob = (jobId) => {
 // manipulation of dom
 
 const showJobs = (jobs) => {
-    
     for (const {name, brand, location, id} of jobs) {
         $("#container-careers").innerHTML += `
         <div class="w-1/5 p-8 border-2 border-[#773344] m-4">
@@ -212,8 +211,15 @@ const arraysToFilters = (jobs) => {
 }
 
 // events
-$("#show-careers").addEventListener("click", () => {
+$("#btn-refresh").addEventListener("click", () => {
     window.location.href = "index.html"
+})
+$("#show-careers").addEventListener("click", () => {
+    showElement($("#section-careers"))
+    hideElement($("#alert-delete"))
+    hideElement($("#card-details"))
+    hideElement($("#submit-edit"))
+    hideElement($("#form"))
 })
 
 $("#btn-cancel").addEventListener("click", () => {
