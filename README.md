@@ -18,7 +18,7 @@ Tecnologías aplicadas:
     
 Corresponde a la home de la página, donde se muestran todos los empleos disponibles, tiene un espacio para los filtros para que el usario seleccione el lugar, la categoría y seniority del puesto que esta buscando. Al dar click en "Ver Detalles" podra ver todos los detalles de dicho empleo, incluso modificarlo o eliminarlos. 
     
-**Añadir Empleo**    
+**AÑADIR EMPLEO**    
 
 Aca tenemos un formulario para que el usuario pueda ingresar empleos nuevos disponibles.
 
