@@ -27,7 +27,7 @@ const getJobs = () => {
             showFilterCategories()
             showFilterLocations()
             showFilterSeniorities()
-        })
+        })      
 }
 getJobs()
 
@@ -41,7 +41,6 @@ const getJobToEdit = (jobId) => {
     fetch(`https://6384c7c63fa7acb14f00609e.mockapi.io/jobs/${jobId}`)
         .then(res => res.json())
         .then(data => populateForm(data))
-
 }
 
 const getJobFilter = (filter, select) => {
@@ -84,35 +83,41 @@ const deleteJob = (jobId) => {
 // manipulation of dom
 
 const showJobs = (jobs) => {
-    setTimeout(() => {
-        $("#spiner").innerHTML =""
-        for (const {name, brand, location, id} of jobs) {
-            $("#container-careers").innerHTML += `
-            <div class="w-64 sm:w-64 md:w-48 lg:w-1/5 p-8 border-2 border-[#773344] m-4">
-                <div class="space-y-4">
-                    <h2 class="text-2xl text-[#0B0014] font-bold text-center md:text-lg lg:text-2xl">${name}</h2>
-                    <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
-                    <p class=""><i class="fa-solid fa-location-dot text-red-700"></i> ${location}</p>
-                    <button class="btn-details px-4 py-1 rounded-md border-2 border-[#1A3A3A]" onclick="getJob(${id})">Ver detalles</button>
-                </div>
-            </div>`  
-        }
-        for (const btn of $$(".btn-details")) {
-            btn.addEventListener("click", () => {
-                hideElement($("#section-careers"))
-                showElement($("#card-details"))
-            })
-        }
-        
-    }, 2000);  
+    showElement($("#spiner"))
+    hideElement($("#section-careers"))
+        setTimeout(() => {
+            hideElement($("#spiner"),
+            showElement($("#section-careers")))
+                for (const {name, brand, location, id} of jobs) {
+                    $("#container-careers").innerHTML += `
+                    <div class="w-48 sm:w-64 md:w-48 lg:w-1/5 p-6 border-2 border-[#773344] m-4">
+                        <div class="space-y-4">
+                            <h2 class="text-lg text-[#0B0014] font-bold pr-4 text-center md:text-lg lg:text-2xl">${name}</h2>
+                            <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
+                            <p class=""><i class="fa-solid fa-location-dot text-red-700"></i> ${location}</p>
+                            <button class="btn-details px-4 py-1 rounded-md border-2 border-[#1A3A3A]" onclick="getJob(${id})">Ver detalles</button>
+                        </div>
+                    </div>`  
+                }
+                for (const btn of $$(".btn-details")) {
+                    btn.addEventListener("click", () => {
+                        hideElement($("#section-careers"))
+                        showElement($("#card-details"))
+                    })
+                }
+                
+        }, 2000);  
 }
 
 const showJobDetail = (job) =>{
-    const {name, description, location, category, seniority, image, brand, id} = job
-    $("#card-details").innerHTML = `
-        <div class="w-[435px] sm:w-[600px] md:w-[800px]">
-                    <div class="flex p-8 border-2 border-[#773344] m-4">
-                        <div class="w-[500px] mt-20">
+    showElement($("#spiner"))
+        setTimeout(() => {
+            hideElement($("#spiner"))
+            const {name, description, location, category, seniority, image, brand, id} = job
+            $("#card-details").innerHTML = `
+                <div class="w-full sm:w-[600px] md:w-[800px]">
+                    <div class="md:flex p-8 border-2 border-[#773344] m-4">
+                        <div class="flex items-center mb-8 md:w-[500px]">
                             <img src="${image}" alt="" class="w-[200px] h-[100px]">
                         </div>
                         <div class="space-y-4">
@@ -122,32 +127,35 @@ const showJobDetail = (job) =>{
                             <p>Categoría del puesto: <span class="font-semibold">${category}</span></p>
                             <p>${description}</p>
                             <p>Experiencia: <span class="font-semibold">${seniority}</span></p>
-                            <div>
-                            <button class="btn-edit text-white px-4 py-1 rounded-md  bg-green-700" data-id="${id}">Editar</button>
-                            <button class="btn-delete text-white px-4 py-1 rounded-md bg-red-700" data-id="${id}">Eliminar</button>
-                            </div>
+                                <div>
+                                    <button class="btn-edit text-white px-4 py-1 rounded-md  bg-green-700" data-id="${id}">Editar</button>
+                                    <button class="btn-delete text-white px-4 py-1 rounded-md bg-red-700" data-id="${id}">Eliminar</button>
+                                </div>
                         </div>
                     </div>
                 </div>
-        `
-    for (const btn of $$(".btn-edit")) {
-        btn.addEventListener("click", () => {
-            isSubmit = false
-            hideElement($("#submit"))
-            showElement($("#submit-edit"))
-            const jobId = btn.getAttribute("data-id")
-            $("#submit-edit").setAttribute("data-id", jobId)
-            getJobToEdit(jobId)
-        })
-    }
-    for (const btn of $$(".btn-delete")) {
-        btn.addEventListener("click", () => {
-            hideElement($("#card-details"))
-            showElement($("#alert-delete"))
-            const jobId = btn.getAttribute("data-id")
-            $("#submit-delete").setAttribute("data-id", jobId)
-        })
-    }
+                `
+            for (const btn of $$(".btn-edit")) {
+                btn.addEventListener("click", () => {
+                    isSubmit = false
+                    hideElement($("#submit"))
+                    showElement($("#submit-edit"))
+                    const jobId = btn.getAttribute("data-id")
+                    $("#submit-edit").setAttribute("data-id", jobId)
+                    getJobToEdit(jobId)
+                })
+            }
+            for (const btn of $$(".btn-delete")) {
+                btn.addEventListener("click", () => {
+                    hideElement($("#card-details"))
+                    showElement($("#alert-delete"))
+                    const jobId = btn.getAttribute("data-id")
+                    $("#submit-delete").setAttribute("data-id", jobId)
+                })
+            }
+
+        }, 2000)
+    
     
 }
 
