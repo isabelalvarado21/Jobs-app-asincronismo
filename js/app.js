@@ -88,9 +88,9 @@ const showJobs = (jobs) => {
         $("#spiner").innerHTML =""
         for (const {name, brand, location, id} of jobs) {
             $("#container-careers").innerHTML += `
-            <div class="w-1/5 p-8 border-2 border-[#773344] m-4">
+            <div class="w-64 sm:w-64 md:w-48 lg:w-1/5 p-8 border-2 border-[#773344] m-4">
                 <div class="space-y-4">
-                    <h2 class="text-2xl text-[#0B0014] font-bold text-center">${name}</h2>
+                    <h2 class="text-2xl text-[#0B0014] font-bold text-center md:text-lg lg:text-2xl">${name}</h2>
                     <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
                     <p class=""><i class="fa-solid fa-location-dot text-red-700"></i> ${location}</p>
                     <button class="btn-details px-4 py-1 rounded-md border-2 border-[#1A3A3A]" onclick="getJob(${id})">Ver detalles</button>
@@ -101,46 +101,43 @@ const showJobs = (jobs) => {
             btn.addEventListener("click", () => {
                 hideElement($("#section-careers"))
                 showElement($("#card-details"))
-               
             })
         }
-
-    }, 2000)
-     
+        
+    }, 2000);  
 }
 
 const showJobDetail = (job) =>{
-   
-        const {name, description, location, category, seniority, image, brand, id} = job
+    const {name, description, location, category, seniority, image, brand, id} = job
     $("#card-details").innerHTML = `
-    <div class=" w-[800px]">
-                <div class="flex p-8 border-2 border-[#773344] m-4">
-                    <div class="w-[500px] mt-20">
-                        <img src="${image}" alt="" class="w-[200px] h-[100px]">
-                    </div>
-                    <div class="space-y-4">
-                        <h1 class="text-2xl text-[#0B0014] font-bold">${name.toUpperCase()}</h1>
-                        <h4 class="text-xl font-medium text-[#773344]">${brand.toUpperCase()}</h4>
-                        <p class="">Ubicación:  <i class="fa-solid fa-location-dot text-red-700"></i> <span class="font-semibold">${location}</span></p>
-                        <p>Categoría del puesto: <span class="font-semibold">${category}</span></p>
-                        <p>${description}</p>
-                        <p>Experiencia: <span class="font-semibold">${seniority}</span></p>
-                        <div>
-                        <button class="btn-edit text-white px-4 py-1 rounded-md  bg-green-700" data-id="${id}">Editar</button>
-                        <button class="btn-delete text-white px-4 py-1 rounded-md bg-red-700" data-id="${id}">Eliminar</button>
+        <div class="w-[435px] sm:w-[600px] md:w-[800px]">
+                    <div class="flex p-8 border-2 border-[#773344] m-4">
+                        <div class="w-[500px] mt-20">
+                            <img src="${image}" alt="" class="w-[200px] h-[100px]">
+                        </div>
+                        <div class="space-y-4">
+                            <h1 class="text-2xl text-[#0B0014] font-bold">${name.toUpperCase()}</h1>
+                            <h4 class="text-xl font-medium text-[#773344]">${brand.toUpperCase()}</h4>
+                            <p class="">Ubicación:  <i class="fa-solid fa-location-dot text-red-700"></i> <span class="font-semibold">${location}</span></p>
+                            <p>Categoría del puesto: <span class="font-semibold">${category}</span></p>
+                            <p>${description}</p>
+                            <p>Experiencia: <span class="font-semibold">${seniority}</span></p>
+                            <div>
+                            <button class="btn-edit text-white px-4 py-1 rounded-md  bg-green-700" data-id="${id}">Editar</button>
+                            <button class="btn-delete text-white px-4 py-1 rounded-md bg-red-700" data-id="${id}">Eliminar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-     `
-     for (const btn of $$(".btn-edit")) {
+        `
+    for (const btn of $$(".btn-edit")) {
         btn.addEventListener("click", () => {
             isSubmit = false
             hideElement($("#submit"))
+            showElement($("#submit-edit"))
             const jobId = btn.getAttribute("data-id")
             $("#submit-edit").setAttribute("data-id", jobId)
             getJobToEdit(jobId)
-
         })
     }
     for (const btn of $$(".btn-delete")) {
@@ -151,8 +148,6 @@ const showJobDetail = (job) =>{
             $("#submit-delete").setAttribute("data-id", jobId)
         })
     }
-        
-    ;
     
 }
 
@@ -223,6 +218,7 @@ const arraysToFilters = (jobs) => {
 $("#btn-refresh").addEventListener("click", () => {
     window.location.href = "index.html"
 })
+
 $("#show-careers").addEventListener("click", () => {
     showElement($("#section-careers"))
     hideElement($("#alert-delete"))
@@ -278,13 +274,3 @@ $("#select-seniority").addEventListener("change", (e) => {
     getJobFilter("seniority", senioritySelect)
     
 })
-
-
-
-
-
- 
-
-
-
-
