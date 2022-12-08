@@ -269,16 +269,25 @@ $("#submit-delete").addEventListener("click", () => {
 $("#select-location").addEventListener("change", (e) => {
     let locationSelect = e.target.value;
     getJobFilter("location", locationSelect)
+    hideElement($("#card-details"))
+    hideElement($("#form"))
+    hideElement($("#alert-delete"))
     
 })
 
 $("#select-category").addEventListener("change", (e) => {
     let categorySelect = e.target.value;
     getJobFilter("category", categorySelect)
+    hideElement($("#card-details"))
+    hideElement($("#form"))
+    hideElement($("#alert-delete"))
 })
 
 $("#select-seniority").addEventListener("change", (e) => {
     let senioritySelect = e.target.value;
     getJobFilter("seniority", senioritySelect)
+    hideElement($("#card-details"))
+    hideElement($("#form"))
+    hideElement($("#alert-delete"))
     
 })
