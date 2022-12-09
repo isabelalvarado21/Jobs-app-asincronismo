@@ -6,11 +6,12 @@ const $$ = (selector) => document.querySelectorAll(selector)
 const hideElement = (selector) => selector.classList.add("hidden")
 const showElement = (selector) => selector.classList.remove("hidden")
 
-const capitalize = (word) => {return word[0].toUpperCase() + word.slice(1);}
+const capitalize = (word) => word[0].toUpperCase() + word.slice(1)
 
 // let
 
 let isSubmit = false;
+let completeForm = true;
 let arrCategories = [];
 let arrLocations = [];
 let arrSeniorities = []
@@ -27,7 +28,7 @@ const getJobs = () => {
             showFilterCategories()
             showFilterLocations()
             showFilterSeniorities()
-        })      
+        })   
 }
 getJobs()
 
@@ -88,9 +89,12 @@ const showJobs = (jobs) => {
         setTimeout(() => {
             hideElement($("#spiner"),
             showElement($("#section-careers")))
-                for (const {name, brand, location, id} of jobs) {
+                for (const {image, name, brand, location, id} of jobs) {
                     $("#container-careers").innerHTML += `
-                    <div class="w-48 sm:w-64 md:w-48 lg:w-1/5 p-6 border-2 border-[#773344] m-4">
+                    <div class="w-48 sm:w-64 md:w-1/5 lg:w-1/5 p-6 border-2 border-[#773344] m-4">
+                        <div class="flex items-center pb-6">
+                            <img src="${image}" alt="" class="w-[200px] h-[100px]">
+                        </div>
                         <div class="space-y-4">
                             <h2 class="text-lg text-[#0B0014] font-bold pr-4 text-center md:text-lg lg:text-2xl">${name}</h2>
                             <h4 class="text-xl font-medium text-[#773344] text-center">${brand.toUpperCase()}</h4>
@@ -104,8 +108,7 @@ const showJobs = (jobs) => {
                         hideElement($("#section-careers"))
                         showElement($("#card-details"))
                     })
-                }
-                
+                }        
         }, 2000);  
 }
 
@@ -153,10 +156,8 @@ const showJobDetail = (job) =>{
                     $("#submit-delete").setAttribute("data-id", jobId)
                 })
             }
-
         }, 2000)
-    
-    
+  
 }
 
 const populateForm = (job) => {
@@ -222,6 +223,15 @@ const arraysToFilters = (jobs) => {
     }
 }
 
+const validateForm = () => {
+    for (const input of $$(".input")){
+        if (input.value === "") {
+            completeForm = false
+            return completeForm
+        }
+    }
+}
+
 // events
 $("#btn-refresh").addEventListener("click", () => {
     window.location.href = "index.html"
@@ -240,7 +250,7 @@ $("#btn-cancel").addEventListener("click", () => {
     showElement($("#section-careers"))
 })
 
-$("#addJob").addEventListener("click", () => {
+$("#addJob").addEventListener("click", () => {   
     hideElement($("#section-careers"))
     showElement($("#form"))
     hideElement($("#card-details"))
@@ -248,14 +258,20 @@ $("#addJob").addEventListener("click", () => {
     hideElement($("#alert-delete"))
     showElement($("#submit"))
     $("#form-").reset()
-    isSubmit = true
+    isSubmit = true 
 })
 
 $("#form").addEventListener("submit", (e) => {
     e.preventDefault()
     if (isSubmit) {
-        registerJob()
-    } else {
+        validateForm()
+        if (completeForm) {
+            registerJob()
+        }else{
+            alert("Debes completar TODOS los datos para que se considere un empleo 'Valido'")
+            window.location.href = "index.html"    
+        }   
+    }else {
         const jobId = $("#submit-edit").getAttribute("data-id")
         editJob(jobId)
     }  
@@ -269,15 +285,18 @@ $("#submit-delete").addEventListener("click", () => {
 $("#select-location").addEventListener("change", (e) => {
     let locationSelect = e.target.value;
     getJobFilter("location", locationSelect)
+    $("#select-category").selectedIndex = 0
+    $("#select-seniority").selectedIndex = 0
     hideElement($("#card-details"))
     hideElement($("#form"))
-    hideElement($("#alert-delete"))
-    
+    hideElement($("#alert-delete")) 
 })
 
 $("#select-category").addEventListener("change", (e) => {
     let categorySelect = e.target.value;
     getJobFilter("category", categorySelect)
+    $("#select-location").selectedIndex = 0
+    $("#select-seniority").selectedIndex = 0
     hideElement($("#card-details"))
     hideElement($("#form"))
     hideElement($("#alert-delete"))
@@ -286,8 +305,9 @@ $("#select-category").addEventListener("change", (e) => {
 $("#select-seniority").addEventListener("change", (e) => {
     let senioritySelect = e.target.value;
     getJobFilter("seniority", senioritySelect)
+    $("#select-category").selectedIndex = 0
+    $("#select-location").selectedIndex = 0
     hideElement($("#card-details"))
     hideElement($("#form"))
-    hideElement($("#alert-delete"))
-    
+    hideElement($("#alert-delete")) 
 })
